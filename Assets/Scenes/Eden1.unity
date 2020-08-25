@@ -3328,9 +3328,22 @@ MonoBehaviour:
   dropper: {fileID: 1630047566}
   bildings: {fileID: 1630047568}
   Button: {fileID: 33453874}
-  MoneyText: {fileID: 0}
-  PeopleText: {fileID: 0}
-  ElectrisityText: {fileID: 0}
+  money_text: {fileID: 202077836}
+  roads:
+  - {fileID: -927199367670048503, guid: b2c929cfa18e2bb44b6355e3048eadfd, type: 3}
+  - {fileID: -927199367670048503, guid: b27dd35d1a0eaad44a0c76315f625a39, type: 3}
+  - {fileID: -927199367670048503, guid: 842432db0b883704f8f796ab74e67861, type: 3}
+  - {fileID: -927199367670048503, guid: 5027deb888bd5a54a989912f1677f740, type: 3}
+  - {fileID: -927199367670048503, guid: 51923def0dc020743920f5db3f147ba0, type: 3}
+  things:
+  - {fileID: -927199367670048503, guid: dcdb79f2cd1adeb40b57f9f906b4346c, type: 3}
+  - {fileID: -927199367670048503, guid: b4a5c1c806afaa14684a8bba4390ed34, type: 3}
+  - {fileID: -927199367670048503, guid: f157c1ee70b7f354baa241d7df41af28, type: 3}
+  - {fileID: -927199367670048503, guid: a0cfccccb3805fb49ba32e0a6cd9b5fd, type: 3}
+  - {fileID: -927199367670048503, guid: de02c186449785447a4469b31143d265, type: 3}
+  laboratories: []
+  People: {fileID: 1848139242}
+  Electrisity: {fileID: 923575667}
   People_count: 2
   Electrisity_count: 0
   old_number: 0
@@ -3475,7 +3488,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: d58f0e64d98d45f46999fc60f29ac78e,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.077
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: d58f0e64d98d45f46999fc60f29ac78e,
         type: 3}
