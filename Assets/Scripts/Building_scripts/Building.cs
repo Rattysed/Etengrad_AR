@@ -6,6 +6,8 @@ public class Building : MonoBehaviour
     public GameObject main_script_object;
     public Renderer MainRenderer;
     public Vector2Int Size = Vector2Int.one;
+    public Canvas canvas;
+   
     //public GameObject render_cube;
     [Header("Price")]
     public float price_money = 1;
@@ -21,10 +23,11 @@ public class Building : MonoBehaviour
     public int timed_people = 0;
 
     private Main main_game_script;
+    private Camera MainCamera;
 
     private void Awake()
     {
-        main_game_script = main_script_object.GetComponent<Main>();
+        MainCamera = Camera.main;
     }
 
     public void SetTransparent(bool available)
@@ -41,6 +44,7 @@ public class Building : MonoBehaviour
 
     public void SetNormal()
     {
+        main_game_script = main_script_object.GetComponent<Main>();
         Debug.Log("norma");
         MainRenderer.material.color = new Color(240, 54, 54, 0f);
     }
@@ -80,6 +84,15 @@ public class Building : MonoBehaviour
 
     public void BuyBuilding()
     {
+        main_game_script.People_count -= price_people;
+        main_game_script.Electrisity_count -= price_electro;
+        main_game_script.money -= price_money;
+    }
+
+    private void Update()
+    {
+        Quaternion rotation = Quaternion.FromToRotation(canvas.transform.forward, canvas.transform.position - MainCamera.transform.position);
+        canvas.transform.rotation = canvas.transform.rotation * rotation;
 
     }
 }

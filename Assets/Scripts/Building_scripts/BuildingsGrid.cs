@@ -5,6 +5,9 @@ public class BuildingsGrid : MonoBehaviour
     public Vector2Int GridSize = new Vector2Int(10, 10);
     //public GameObject grid_object;
     public GameObject real_grid_object;
+
+    public GameObject mainScriptObject;
+    private Main mainScript;
     private Building[,] grid;
     private Building flyingBuilding;
     private Camera mainCamera;
@@ -16,6 +19,7 @@ public class BuildingsGrid : MonoBehaviour
         help_object = new GameObject();
         help_object.transform.SetParent(real_grid_object.transform);
         mainCamera = Camera.main;
+        mainScript = mainScriptObject.GetComponent<Main>();
     }
 
     public void StartPlacingBuilding(Building buildingPrefab)
@@ -26,6 +30,7 @@ public class BuildingsGrid : MonoBehaviour
         }
         
         flyingBuilding = Instantiate(buildingPrefab);
+        flyingBuilding.GetComponent<Building>().main_script_object = mainScriptObject;
         flyingBuilding.transform.SetParent(real_grid_object.transform);
         flyingBuilding.transform.localRotation = new Quaternion(0, 0, 0, 0);
     }

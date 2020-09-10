@@ -18,19 +18,9 @@ public class Main : MonoBehaviour
      * 4. - 
      * 5. - режим перемещения зданий
      */
-    //bool is_building = false;
-    // bool is_deleting = false;
     public float money = 2;
     float timer = 0;
-    Dictionary<int, bool> is_opened = new Dictionary<int, bool>()
-    {
-        {0, true },
-        {1, true },
-        {2, false },
-        {3, true },
-        {4, false },
-        {5, false }
-    };
+    
 
     private Camera mainCamera;
 
@@ -53,7 +43,7 @@ public class Main : MonoBehaviour
 
     bool showing_message = false;
     public Text message;
-    public GameObject deleteButton; // Кнопка удаления
+
 
     private List<GameObject> things;
 
@@ -69,12 +59,9 @@ public class Main : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        for (int i = 0; i < things.Count - 4; i++)
-        {
-            //is_opened.Add(i + 4, false);
-        }
+        
         made_buttons();
-        what = things[0];
+        //what = things[0];
         LoadFile();
         StartCoroutine(routine: Control());
         mainCamera = Camera.main;
@@ -89,16 +76,16 @@ public class Main : MonoBehaviour
         public int people;
         public float electrysity;
         public List<BuildingsData> zdaniya;
-        public Dictionary<int, bool> is_opened;
+        
 
-        public GameData(float money, int people, float electrysity, List<BuildingsData> zdaniya, Dictionary<int, bool> is_opened)
+        public GameData(float money, int people, float electrysity, List<BuildingsData> zdaniya)
         {
            
             this.money = money;
             this.people = people;
             this.electrysity = electrysity;
             this.zdaniya = zdaniya;
-            this.is_opened = is_opened;
+            
         }
     }
     [System.Serializable]
@@ -175,7 +162,7 @@ public class Main : MonoBehaviour
         if (File.Exists(destination)) file = File.OpenWrite(destination);
         else file = File.Create(destination);
 
-        GameData data = new GameData(money, People_count, Electrisity_count, buildings_list, is_opened);
+        GameData data = new GameData(money, People_count, Electrisity_count, buildings_list);
         BinaryFormatter bf = new BinaryFormatter();
         bf.Serialize(file, data);
         file.Close();
@@ -200,7 +187,7 @@ public class Main : MonoBehaviour
         People_count = data.people;
         Electrisity_count = data.electrysity;
         List<BuildingsData> zdaniya = data.zdaniya;
-        Dictionary<int, bool> is_opened = data.is_opened;
+   
         for (int i = 0; i < zdaniya.Count; i++)
         {
             GameObject spawn = Instantiate(things[zdaniya[i].object_index], GameObject.Find(zdaniya[i].parent_name).transform);
@@ -369,7 +356,6 @@ public class Main : MonoBehaviour
                     float delta_y = old_y - y;
                     old_x = x;
                     old_y = y;
-                    Debug.Log(delta_x.ToString() + " " + delta_y.ToString());
                     float scale = every_fucking_thing.transform.localScale.x;
                     float all_x = every_fucking_thing.transform.localPosition.x - delta_x / 2000;
                     float all_y = every_fucking_thing.transform.localPosition.y;
