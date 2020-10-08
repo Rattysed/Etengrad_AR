@@ -57,6 +57,9 @@ ExportedObj/
 *.blend.meta
 *.blend1.meta
 *.txt.meta
+*.png.meta
+
+
 
 # Unity3D generated file on crash reports
 sysinfo.txt
@@ -75,3 +78,6 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+
+# Smthing
+/[Pp]rojectSettings/[Pp]rojectVersion.txt
