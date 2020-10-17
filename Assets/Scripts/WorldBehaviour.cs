@@ -26,6 +26,7 @@ public class WorldBehaviour : MonoBehaviour {
     }
     public IEnumerator OneFingerMode()
     {
+        GameObject choosedBuilding;
         Debug.Log("One finger!");
         float old_x = Input.touches[0].position.x;
         float old_y = Input.touches[0].position.y;
@@ -41,35 +42,21 @@ public class WorldBehaviour : MonoBehaviour {
             if (Physics.Raycast(ray, out hit))
             {
                 
-                if (hit.transform.name.IndexOf("UI_block") >= 0)
+                if (hit.transform.name.IndexOf("UI_block") < 0)
                 {
 
-                }
-                else
-                {
-                    /*if (hit.transform.name.IndexOf("visuals") >= 0)
+
+                    if (hit.transform.name.IndexOf("visuals") >= 0)
                     {
-                        if (hit.transform.gameObject == choosed_building)
-                        {
-                            time_to_choose -= Time.deltaTime;
-                            if (time_to_choose <= 0)
-                            {
-                                mode = 5; // Переход в режим управления зданием. 
-                                continue;
-                            }
-                        }
-                        else
-                        {
-                            choosed_building = hit.transform.gameObject;
-                            time_to_choose = 2;
-                        }
+                        
 
                         
-                    }*/
+                    }
                     //if (hit.transform.gameObject == choosed_building)
                     //{
                      //   continue;
                     //}
+                    /*
                     float x = Input.touches[0].position.x;
                     float y = Input.touches[0].position.y;
                     float delta_x = old_x - x;
@@ -80,6 +67,7 @@ public class WorldBehaviour : MonoBehaviour {
                     float all_x = MovingObject.transform.localPosition.x - delta_x / 2000;
                     float all_y = MovingObject.transform.localPosition.y;
                     float all_z = MovingObject.transform.localPosition.z - delta_y / 2000;
+                    
                     if (Mathf.Abs(all_x) > 0.5)
                     {
                         all_x = MovingObject.transform.localPosition.x;
@@ -89,7 +77,8 @@ public class WorldBehaviour : MonoBehaviour {
                         all_z = MovingObject.transform.localPosition.z;
                     }
                     Vector3 target = new Vector3(all_x, all_y,  all_z);
-                    MovingObject.transform.localPosition = target;
+                    MovingObject.transform.localPosition = target;*/
+
 
 
 
