@@ -40,7 +40,7 @@ public class show : MonoBehaviour
 	{
 
 		Array a = new string[3] { ".PNG", ".png", ".jpg" };
-		var info = new DirectoryInfo("C:\\Users\\User\\Pictures\\");
+		var info = new DirectoryInfo("C:\\Users\\Student\\Pictures\\");
 		var fileInfo = info.GetFiles();
 		int count = 0;
 		foreach (var file in fileInfo)
@@ -48,9 +48,13 @@ public class show : MonoBehaviour
 			Debug.Log(file.Extension);
 			if (System.Array.IndexOf(a, file.Extension) != -1)
 			{
+               /* Texture2D tmpTexture = new Texture2D(1, 1);
+                byte[] tmpBytes = File.ReadAllBytes(file.FullName);
+                tmpTexture.LoadImage(tmpBytes);
+                Debug.Log("Raw size: " + tmpTexture.width + " x " + tmpTexture.height);*/
 
-				//Создание кнопки
-				image_buttons.Add(Instantiate(new GameObject()));
+                //Создание кнопки
+                image_buttons.Add(Instantiate(new GameObject()));
 				image_buttons[image_buttons.Count - 1].transform.SetParent(Menu_canvas.gameObject.transform);
 				image_buttons[image_buttons.Count - 1].AddComponent<RectTransform>();
 				image_buttons[image_buttons.Count - 1].AddComponent<Image>();
