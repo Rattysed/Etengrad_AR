@@ -5,19 +5,30 @@ using System.IO;
 
 public class WorldBehaviour : MonoBehaviour {
     public GameObject MovingObject;
+    public GameObject buildingsGridObject;
+
+    BuildingsGrid buildingsGrid;
     int GameMode = 0;
     private Camera mainCamera;
+
+    Resolution res;
     
     private void Start()
     {
+        res = Screen.resolutions[0];
+        buildingsGrid = buildingsGridObject.GetComponent<BuildingsGrid>();
         mainCamera = Camera.main;
+        StartCoroutine(routine: Controller());
     }
 
     private IEnumerator Controller(){
         while (true){
+            if (Input.GetMouseButtonDown(0))
+                yield return StartCoroutine(routine: OneFingerMode());
             switch (Input.touchCount){
                 case 1:
-                break;
+                    yield return StartCoroutine(routine: OneFingerMode());
+                    break;
                 case 2:
                 break;
             }
@@ -26,62 +37,38 @@ public class WorldBehaviour : MonoBehaviour {
     }
     public IEnumerator OneFingerMode()
     {
-        GameObject choosedBuilding;
+        int width = res.width;
+        int height = res.height;
+        Transform choosedBuilding;
         Debug.Log("One finger!");
-        float old_x = Input.touches[0].position.x;
-        float old_y = Input.touches[0].position.y;
+        //Vector2 oldPos = Input.touches[0].position;
+        Vector2 oldPos = Input.mousePosition;
         yield return null;
-        while (true)
+        //while (Input.touchCount == 1 || Input.GetMouseButtonDown(0))
+        while (!Input.GetMouseButtonUp(0))
         {
-            if (Input.touchCount != 1)
-            {
-                yield break;
-            }
             RaycastHit hit;
-            var ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out hit))
+            Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+            int layerMaskBuildings = 1 << 8;
+            int layerMask = ~layerMaskBuildings;
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
             {
-                
-                if (hit.transform.name.IndexOf("UI_block") < 0)
+                if (hit.transform.name.IndexOf("UI") < 0)
                 {
-
-
-                    if (hit.transform.name.IndexOf("visuals") >= 0)
-                    {
-                        
-
-                        
-                    }
-                    //if (hit.transform.gameObject == choosed_building)
-                    //{
-                     //   continue;
-                    //}
-                    /*
-                    float x = Input.touches[0].position.x;
-                    float y = Input.touches[0].position.y;
-                    float delta_x = old_x - x;
-                    float delta_y = old_y - y;
-                    old_x = x;
-                    old_y = y;
-                    float scale = MovingObject.transform.localScale.x;
-                    float all_x = MovingObject.transform.localPosition.x - delta_x / 2000;
-                    float all_y = MovingObject.transform.localPosition.y;
-                    float all_z = MovingObject.transform.localPosition.z - delta_y / 2000;
                     
-                    if (Mathf.Abs(all_x) > 0.5)
-                    {
-                        all_x = MovingObject.transform.localPosition.x;
-                    }
-                    if (Mathf.Abs(all_z) > 0.25)
-                    {
-                        all_z = MovingObject.transform.localPosition.z;
-                    }
-                    Vector3 target = new Vector3(all_x, all_y,  all_z);
-                    MovingObject.transform.localPosition = target;*/
+                    //buildingsGrid.flyingBuilding = 
+                    
+                }
 
-
-
-
+            }
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMaskBuildings))
+            {
+                Debug.Log(hit.transform.name);
+                if (hit.transform.name.IndexOf("HitBox") >= 0)
+                {
+                    choosedBuilding = hit.transform.parent;
+                    Debug.Log(choosedBuilding.name);
+                    buildingsGrid.flyingBuilding = choosedBuilding.GetComponent<Building>();
                 }
             }
             yield return null;
@@ -92,7 +79,8 @@ public class WorldBehaviour : MonoBehaviour {
 
 
     private void Update() {
-        if (Input.touchCount == 1)
+        
+        /*if (Input.touchCount == 1)
         {
             Debug.Log(Input.touches[0].position.x.ToString() + " " + Input.touches[0].position.x.ToString());
         }
@@ -105,6 +93,6 @@ public class WorldBehaviour : MonoBehaviour {
                 Debug.Log(hit.transform.name);
                
             }
-        }
+        }*/
     }
 }
