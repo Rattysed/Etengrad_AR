@@ -8,31 +8,36 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8931980713482091447}
+  - component: {fileID: 2632468405800810830}
   - component: {fileID: 1872879393320583821}
   - component: {fileID: 9152966158575563438}
-  - component: {fileID: 9003888573428631626}
-  m_Layer: 0
-  m_Name: Cube
+  - component: {fileID: 6005118033768207862}
+  m_Layer: 8
+  m_Name: HitBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8931980713482091447
-Transform:
+--- !u!224 &2632468405800810830
+RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6997726588770953103}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.451, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 2.9465, z: 1}
   m_Children: []
   m_Father: {fileID: 7578017093772874056}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 1.451}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!33 &1872879393320583821
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -80,7 +85,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &9003888573428631626
+--- !u!65 &6005118033768207862
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -89,10 +94,10 @@ BoxCollider:
   m_GameObject: {fileID: 6997726588770953103}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 0.99999994, z: 1}
+  m_Center: {x: 0, y: 0.000030517578, z: 0}
 --- !u!1 &7578017093567675921
 GameObject:
   m_ObjectHideFlags: 0
@@ -235,7 +240,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7578017094010931114}
-  - {fileID: 8931980713482091447}
+  - {fileID: 2632468405800810830}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -253,6 +258,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MainRenderer: {fileID: 9152966158575563438}
   Size: {x: 1, y: 1}
+  price_money: 1
+  price_electro: 0.1
+  price_people: 1
+  static_money: 0
+  static_electro: 0
+  static_people: 0
+  timed_money: 0
+  timed_electro: 0
+  timed_people: 0
 --- !u!1 &7578017094010931158
 GameObject:
   m_ObjectHideFlags: 0

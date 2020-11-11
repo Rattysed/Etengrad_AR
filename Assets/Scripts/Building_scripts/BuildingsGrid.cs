@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 public class BuildingsGrid : MonoBehaviour
 {
@@ -6,10 +7,10 @@ public class BuildingsGrid : MonoBehaviour
     //public GameObject grid_object;
     public GameObject real_grid_object;
 
-    public GameObject mainScriptObject;
-    private Main mainScript;
+    //public GameObject mainScriptObject;
+    //private Main mainScript;
     private Building[,] grid;
-    private Building flyingBuilding;
+    public Building flyingBuilding;
     private Camera mainCamera;
     private GameObject help_object;
     
@@ -19,18 +20,19 @@ public class BuildingsGrid : MonoBehaviour
         help_object = new GameObject();
         help_object.transform.SetParent(real_grid_object.transform);
         mainCamera = Camera.main;
-        mainScript = mainScriptObject.GetComponent<Main>();
+       // mainScript = mainScriptObject.GetComponent<Main>();
     }
 
     public void StartPlacingBuilding(Building buildingPrefab)
     {
+        Debug.Log("Хуууууй");
         if (flyingBuilding != null)
         {
             Destroy(flyingBuilding.gameObject);
         }
         
         flyingBuilding = Instantiate(buildingPrefab);
-        flyingBuilding.GetComponent<Building>().main_script_object = mainScriptObject;
+        //flyingBuilding.GetComponent<Building>().main_script_object = mainScriptObject;
         flyingBuilding.transform.SetParent(real_grid_object.transform);
         flyingBuilding.transform.localRotation = new Quaternion(0, 0, 0, 0);
     }
@@ -43,8 +45,9 @@ public class BuildingsGrid : MonoBehaviour
             //var groundPlane = new Plane(Vector3.up, Vector3.zero);
             RaycastHit hit;
             Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-
-            if (Physics.Raycast(ray, out hit) 
+            int layerMask = 1 << 8;
+            layerMask = ~layerMask;
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask) 
                 && hit.transform.gameObject == real_grid_object 
                 && hit.transform.name.IndexOf("UI_block") < 0)
             {
@@ -53,13 +56,13 @@ public class BuildingsGrid : MonoBehaviour
                 help_object.transform.position = worldPosition;
                 worldPosition = help_object.transform.localPosition;
                 //Debug.Log(worldPosition.ToString());
-
+                Vector2 cords = CoordsByHit(worldPosition);
+                int x = (int)cords.x; int y = (int)cords.y;
 
                 //int x = Mathf.RoundToInt((worldPosition.x + 0.5f) * GridSize.x);
                 // * GridSize.y);
-                int x = Mathf.RoundToInt((worldPosition.x + 4.5f));
-                int y = Mathf.RoundToInt((worldPosition.z + 4.5f));
-                //Debug.Log(x.ToString() + " " + y.ToString());
+                
+                
 
                 bool available = true;
 
@@ -80,6 +83,13 @@ public class BuildingsGrid : MonoBehaviour
             }
         }
     }
+
+
+    public Vector2 CoordsByHit(Vector3 pos)
+    {
+        return new Vector2(Mathf.RoundToInt((pos.x + 4.5f)), Mathf.RoundToInt((pos.z + 4.5f)));
+    }
+    
 
     private bool IsPlaceTaken(int placeX, int placeY)
     {

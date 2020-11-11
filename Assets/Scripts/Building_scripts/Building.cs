@@ -3,10 +3,10 @@ using System.Collections;
 
 public class Building : MonoBehaviour
 {
-    public GameObject main_script_object;
+    //public GameObject main_script_object;
     public Renderer MainRenderer;
     public Vector2Int Size = Vector2Int.one;
-    public Canvas canvas;
+    //public Canvas canvas;
    
     //public GameObject render_cube;
     [Header("Price")]
@@ -44,9 +44,14 @@ public class Building : MonoBehaviour
 
     public void SetNormal()
     {
-        main_game_script = main_script_object.GetComponent<Main>();
+        //main_game_script = main_script_object.GetComponent<Main>();
         Debug.Log("norma");
         MainRenderer.material.color = new Color(240, 54, 54, 0f);
+    }
+
+    public void UnsetNormal()
+    {
+        MainRenderer.GetComponent<BoxCollider>().enabled = false;
     }
 
     private void OnDrawGizmos()
@@ -91,8 +96,8 @@ public class Building : MonoBehaviour
 
     private void Update()
     {
-        Quaternion rotation = Quaternion.FromToRotation(canvas.transform.forward, canvas.transform.position - MainCamera.transform.position);
-        canvas.transform.rotation = canvas.transform.rotation * rotation;
+        //Quaternion rotation = Quaternion.FromToRotation(canvas.transform.forward, canvas.transform.position - MainCamera.transform.position);
+        //canvas.transform.rotation = canvas.transform.rotation * rotation;
 
     }
 }
