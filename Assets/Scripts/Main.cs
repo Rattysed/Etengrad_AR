@@ -275,11 +275,11 @@ public class Main : MonoBehaviour
             switch (Input.touchCount)
             {
                 case 1:
-                    Debug.Log("one touch!");
-                    yield return StartCoroutine(routine: OneFingerMode());
+                    //Debug.Log("one touch!");
+                    //yield return StartCoroutine(routine: OneFingerMode());
                     break;
                 case 2:
-                    yield return StartCoroutine(routine: TwoFingersMode());
+                    //yield return StartCoroutine(routine: TwoFingersMode());
                     break;
             }
             yield return null;
