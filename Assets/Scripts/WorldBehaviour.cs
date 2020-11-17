@@ -37,6 +37,7 @@ public class WorldBehaviour : MonoBehaviour {
     }
     public IEnumerator OneFingerMode()
     {
+        Debug.Log("YES");
         int width = res.width;
         int height = res.height;
         Transform choosedBuilding;
@@ -68,7 +69,7 @@ public class WorldBehaviour : MonoBehaviour {
                 {
                     choosedBuilding = hit.transform.parent;
                     Debug.Log(choosedBuilding.name);
-                    buildingsGrid.flyingBuilding = choosedBuilding.GetComponent<Building>();
+                   // buildingsGrid.flyingBuilding = choosedBuilding.GetComponent<Building>();
                 }
             }
             yield return null;
