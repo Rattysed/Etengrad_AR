@@ -1,32 +1,43 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using System.IO;
 
 public class WorldBehaviour : MonoBehaviour {
     public GameObject MovingObject;
     public GameObject buildingsGridObject;
-
+    public Text message;
+    public GameObject target;
     BuildingsGrid buildingsGrid;
     int GameMode = 0;
     private Camera mainCamera;
+
+    GameObject bulshit;
 
     Resolution res;
     
     private void Start()
     {
-        res = Screen.resolutions[0];
-        buildingsGrid = buildingsGridObject.GetComponent<BuildingsGrid>();
+        //res = Screen.resolutions[0];
+        //buildingsGrid = buildingsGridObject.GetComponent<BuildingsGrid>();
         mainCamera = Camera.main;
         StartCoroutine(routine: Controller());
+        bulshit = new GameObject();
+        Instantiate(bulshit);
+        bulshit.transform.SetParent(target.transform);
     }
 
     private IEnumerator Controller(){
         while (true){
-            if (Input.GetMouseButtonDown(0))
-                yield return StartCoroutine(routine: OneFingerMode());
+            /*if (Input.GetMouseButtonDown(0))
+                yield return StartCoroutine(routine: OneFingerMode());*/
             switch (Input.touchCount){
+                case 0:
+                    message.text = "0 taps";
+                    break;
                 case 1:
+                    message.text = "1 tap";
                     yield return StartCoroutine(routine: OneFingerMode());
                     break;
                 case 2:
@@ -46,8 +57,8 @@ public class WorldBehaviour : MonoBehaviour {
         //Vector2 oldPos = Input.mousePosition;
         Vector3 oldPos = Vector3.zero;
         yield return null;
-        //while (Input.touchCount == 1 || Input.GetMouseButtonDown(0))
-        while (!Input.GetMouseButtonUp(0))
+        while (Input.touchCount == 1)
+        //while (!Input.GetMouseButtonUp(0))
         {
             RaycastHit hit;
             Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
@@ -56,12 +67,14 @@ public class WorldBehaviour : MonoBehaviour {
             int layerMask = ~(layerMaskBuildings | layerMaskStable);
             int moveMask = 1 << 10;
             
-            Debug.Log(layerMaskStable);
+            //Debug.Log(layerMaskStable);
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, moveMask))
             {
                 if (hit.transform.name.IndexOf("UI") < 0)
                 {
                     Vector3 pos = hit.point;
+                    bulshit.transform.position = pos;
+                    pos = bulshit.transform.localPosition;
                     pos.y = 0;
                     if (oldPos != Vector3.zero)
                     {
@@ -69,6 +82,7 @@ public class WorldBehaviour : MonoBehaviour {
                         MovingObject.transform.localPosition += pos - oldPos;
                     }
                     oldPos = pos;
+                    Debug.Log(pos);
                     //buildingsGrid.flyingBuilding = 
                     
                 }
@@ -87,6 +101,11 @@ public class WorldBehaviour : MonoBehaviour {
             yield return null;
         }
         
+    }
+    
+    public IEnumerator TwoFingersMode()
+    {
+        yield return null;
     }
 
 
