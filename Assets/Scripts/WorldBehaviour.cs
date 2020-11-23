@@ -43,7 +43,8 @@ public class WorldBehaviour : MonoBehaviour {
         Transform choosedBuilding;
         Debug.Log("One finger!");
         //Vector2 oldPos = Input.touches[0].position;
-        Vector2 oldPos = Input.mousePosition;
+        //Vector2 oldPos = Input.mousePosition;
+        Vector3 oldPos = Vector3.zero;
         yield return null;
         //while (Input.touchCount == 1 || Input.GetMouseButtonDown(0))
         while (!Input.GetMouseButtonUp(0))
@@ -51,12 +52,23 @@ public class WorldBehaviour : MonoBehaviour {
             RaycastHit hit;
             Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
             int layerMaskBuildings = 1 << 8;
-            int layerMask = ~layerMaskBuildings;
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
+            int layerMaskStable = 1 << 9;
+            int layerMask = ~(layerMaskBuildings | layerMaskStable);
+            int moveMask = 1 << 10;
+            
+            Debug.Log(layerMaskStable);
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, moveMask))
             {
                 if (hit.transform.name.IndexOf("UI") < 0)
                 {
-                    
+                    Vector3 pos = hit.point;
+                    pos.y = 0;
+                    if (oldPos != Vector3.zero)
+                    {
+
+                        MovingObject.transform.localPosition += pos - oldPos;
+                    }
+                    oldPos = pos;
                     //buildingsGrid.flyingBuilding = 
                     
                 }
