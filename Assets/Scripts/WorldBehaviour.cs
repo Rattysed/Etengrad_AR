@@ -41,7 +41,9 @@ public class WorldBehaviour : MonoBehaviour {
                     yield return StartCoroutine(routine: OneFingerMode());
                     break;
                 case 2:
-                break;
+                    message.text = "2 taps";
+                    yield return StartCoroutine(routine: TwoFingersMode());
+                    break;
             }
             yield return null;
         }
@@ -49,8 +51,8 @@ public class WorldBehaviour : MonoBehaviour {
     public IEnumerator OneFingerMode()
     {
         Debug.Log("YES");
-        int width = res.width;
-        int height = res.height;
+        //int width = res.width;
+        //int height = res.height;
         Transform choosedBuilding;
         Debug.Log("One finger!");
         //Vector2 oldPos = Input.touches[0].position;
@@ -105,7 +107,25 @@ public class WorldBehaviour : MonoBehaviour {
     
     public IEnumerator TwoFingersMode()
     {
+        Vector2 oldPos1 = Input.touches[0].position, oldPos2 = Input.touches[1].position;
+        float oldDist = Vector2.Distance(oldPos1, oldPos2);
+        float oldAngle = Mathf.Atan2((oldPos2.y - oldPos1.y) / oldDist,
+            (oldPos2.x - oldPos1.x) / oldDist) * Mathf.Rad2Deg;
         yield return null;
+        while(Input.touchCount == 2)
+        {
+            Vector2 Pos1 = Input.touches[0].position, Pos2 = Input.touches[1].position;
+            float Dist = Vector2.Distance(Pos1, Pos2);
+            float Angle = Mathf.Atan2((Pos2.y - Pos1.y) / Dist,
+                (Pos2.x - Pos1.x) / Dist) * Mathf.Rad2Deg;
+
+            float deltaScale = Dist / oldDist;
+            float newScale = target.transform.localScale.x * deltaScale;
+            if (0.5f < newScale && newScale < 4) target.transform.localScale = new Vector3(newScale, newScale, newScale);
+            target.transform.Rotate(0, oldAngle - Angle, 0);
+            oldPos1 = Pos1; oldPos2 = Pos2; oldDist = Dist; oldAngle = Angle;
+            yield return null;
+        }
     }
 
 
