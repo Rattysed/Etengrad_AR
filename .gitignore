@@ -59,6 +59,9 @@ ExportedObj/
 *.blend1.meta
 *.txt.meta
 *.png.meta
+
+*.waw.meta
+
 *.fbx.meta
 
 
