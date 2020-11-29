@@ -87,3 +87,4 @@ crashlytics-build.properties
 # Smthing
 /[Pp]rojectSettings/[Pp]rojectVersion.txt
 ProjectSettings/ProjectVersion.txt
+*.meta
