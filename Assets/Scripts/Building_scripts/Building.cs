@@ -1,26 +1,43 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+
+
 
 public class Building : MonoBehaviour
 {
     //public GameObject main_script_object;
     public Renderer MainRenderer;
     public Vector2Int Size = Vector2Int.one;
+
+    int currentLevel = 0;
+
+    public int levelsCount;
     //public Canvas canvas;
-   
-    //public GameObject render_cube;
+
+    //[Min(1)]
+    //public int levels = 1;
+    [Tooltip("X - money, Y - people, Z - Electro")]
     [Header("Price")]
+    public List<Vector3> prices = new List<Vector3>();
+    /*
     public float price_money = 1;
-    public float price_electro = 0.1f;
     public int price_people = 1;
+    public float price_electro = 0.1f;
+    */
+    
+    [Header("LevelModels")]
+    public List<GameObject> levelVisuals;
     [Header("Permanent income")]
     public float static_money = 0;
-    public float static_electro = 0;
     public int static_people = 0;
+    public float static_electro = 0;
+    
     [Header("Timed income (UnitsPerMinute)")]
     public float timed_money = 0;
-    public float timed_electro = 0;
     public int timed_people = 0;
+    public float timed_electro = 0;
+    
 
     private Main main_game_script;
     private Camera MainCamera;
@@ -87,15 +104,17 @@ public class Building : MonoBehaviour
         }
     }
 
-    public void BuyBuilding()
+    public void BuyLevel()
     {
-        main_game_script.People_count -= price_people;
+        /*main_game_script.People_count -= price_people;
         main_game_script.Electrisity_count -= price_electro;
-        main_game_script.money -= price_money;
+        main_game_script.money -= price_money;*/
     }
+ 
 
     private void Update()
     {
+       
         //Quaternion rotation = Quaternion.FromToRotation(canvas.transform.forward, canvas.transform.position - MainCamera.transform.position);
         //canvas.transform.rotation = canvas.transform.rotation * rotation;
 
