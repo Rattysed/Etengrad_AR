@@ -7,13 +7,22 @@ public class BuildingsGrid : MonoBehaviour
     //public GameObject grid_object;
     public GameObject real_grid_object;
 
+    [Header("Scripts")]
+    public InterfaceBehaviour inter;
+    public AllScoreBehaviour allScore;
+    [Space]
+    public Building flyingBuilding;
     //public GameObject mainScriptObject;
     //private Main mainScript;
     private Building[,] grid;
-    public Building flyingBuilding;
+    
     private Camera mainCamera;
     private GameObject help_object;
-    
+
+    private bool available = true;
+    private Vector2Int place;
+    private Vector3 price;
+
     private void Awake()
     {
         grid = new Building[GridSize.x, GridSize.y];
@@ -23,6 +32,20 @@ public class BuildingsGrid : MonoBehaviour
        // mainScript = mainScriptObject.GetComponent<Main>();
     }
 
+    public void StartBuyingBuilding(Building buildingPrefab)
+    {
+        price = buildingPrefab.prices[0];
+        /*if (price.x > allScore.resourseMoney ||
+            price.y > allScore.resoursePeople ||
+            price.z > allScore.resourseElectricity)
+        {
+            StartCoroutine(routine: inter.ShowMessage("Недостаточно ресурсов."));
+            return;
+        }*/
+        StartPlacingBuilding(buildingPrefab);
+
+    }
+
     public void StartPlacingBuilding(Building buildingPrefab)
     {
         Debug.Log("Хуууууй");
@@ -30,10 +53,14 @@ public class BuildingsGrid : MonoBehaviour
         {
             Destroy(flyingBuilding.gameObject);
         }
-        
+        inter.EnterBuildMenu();
         flyingBuilding = Instantiate(buildingPrefab);
+        
+        flyingBuilding.inter = inter;
+        flyingBuilding.score = allScore;
         //flyingBuilding.GetComponent<Building>().main_script_object = mainScriptObject;
         flyingBuilding.transform.SetParent(real_grid_object.transform);
+        flyingBuilding.transform.localScale = new Vector3(1, 1, 1);
         flyingBuilding.transform.localRotation = new Quaternion(0, 0, 0, 0);
     }
 
@@ -44,12 +71,12 @@ public class BuildingsGrid : MonoBehaviour
             //var a = flyingBuilding.GetComponent<Building>().price_electro;
             //var groundPlane = new Plane(Vector3.up, Vector3.zero);
             RaycastHit hit;
-            Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+            //Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+            Ray ray = new Ray(mainCamera.transform.position, mainCamera.transform.forward);
             int layerMask = 1 << 8;
             layerMask = ~layerMask;
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask) 
-                && hit.transform.gameObject == real_grid_object 
-                && hit.transform.name.IndexOf("UI_block") < 0)
+                && hit.transform.gameObject == real_grid_object)
             {
                 //Debug.Log(hit.point.ToString());
                 Vector3 worldPosition = hit.point;
@@ -58,16 +85,19 @@ public class BuildingsGrid : MonoBehaviour
                 //Debug.Log(worldPosition.ToString());
                 Vector2 cords = CoordsByHit(worldPosition);
                 int x = (int)cords.x; int y = (int)cords.y;
-
+                place = new Vector2Int(x, y);
                 //int x = Mathf.RoundToInt((worldPosition.x + 0.5f) * GridSize.x);
                 // * GridSize.y);
-                
-                
 
-                bool available = true;
 
+
+
+                available = true;
                 if (x < 0 || x > GridSize.x - flyingBuilding.Size.x) available = false;
                 if (y < 0 || y > GridSize.y - flyingBuilding.Size.y) available = false;
+                if (price.x > allScore.resourseMoney ||
+                    price.y > allScore.resoursePeople ||
+                    price.z > allScore.resourseElectricity) available = false;
 
                 if (available && IsPlaceTaken(x, y)) available = false;
 
@@ -75,16 +105,39 @@ public class BuildingsGrid : MonoBehaviour
                 //Debug.Log(x.ToString() + " " + GridSize.x.ToString() + " = " + (x / GridSize.x).ToString() + " " + (y / GridSize.y).ToString());
                 flyingBuilding.SetTransparent(available);
 
-                if (available && Input.GetMouseButtonDown(0))
+                /*if (available && Input.GetMouseButtonDown(0))
                 {
                     Debug.Log(x.ToString() + " " + y.ToString());
                     PlaceFlyingBuilding(x, y);
-                }
+                }*/
             }
         }
     }
 
+    public void CancelPlacing()
+    {
+        if (!(flyingBuilding == null))
+            Destroy(flyingBuilding.gameObject);
+        flyingBuilding = null;
+        inter.QuitBuildMenu();
+    }
+    public void AcceptBuying()
+    {
+        if (available)
+        {
+            flyingBuilding.BuyLevel(0);
+            AcceptPlacing();
+        }
+    }
+    public void AcceptPlacing()
+    {
+        if (available)
+        {
+            PlaceFlyingBuilding(place.x, place.y);
 
+            inter.QuitBuildMenu();
+        }
+    }
     public Vector2 CoordsByHit(Vector3 pos)
     {
         return new Vector2(Mathf.RoundToInt((pos.x + 4.5f)), Mathf.RoundToInt((pos.z + 4.5f)));
@@ -97,10 +150,14 @@ public class BuildingsGrid : MonoBehaviour
         {
             for (int y = 0; y < flyingBuilding.Size.y; y++)
             {
-                if (grid[placeX + x, placeY + y] != null) return true;
+                if (grid[placeX + x, placeY + y] != null)
+                {
+                    //Debug.Log("place_fucked");
+                    return true;
+                }
             }
         }
-
+        //Debug.Log("place_free");
         return false;
     }
 
