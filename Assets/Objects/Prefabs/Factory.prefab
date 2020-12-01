@@ -70,13 +70,14 @@ MonoBehaviour:
   - {fileID: 2132833932145634168}
   - {fileID: 1195959406553382243}
   - {fileID: 6755445205553786308}
-  static_money: 0
-  static_people: 0
-  static_electro: 0
+  permanentIncome:
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
   timedIncome:
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
+  - {x: 2, y: 0, z: 0}
+  - {x: 4, y: 0, z: 0}
+  - {x: 8, y: 0, z: 0}
   score: {fileID: 0}
 --- !u!1 &8495695235321781489
 GameObject:

@@ -31,10 +31,8 @@ public class Building : MonoBehaviour
     [Header("LevelModels")]
     public List<GameObject> levelVisuals;
     [Header("Permanent income")]
-    public float static_money = 0;
-    public int static_people = 0;
-    public float static_electro = 0;
-    
+    public List<Vector3> permanentIncome = new List<Vector3>();
+
     [Header("Timed income (UnitsPerMinute)")]
     public List<Vector3> timedIncome = new List<Vector3>();
     /*public float timed_money = 0;
@@ -45,7 +43,7 @@ public class Building : MonoBehaviour
     [Header("Score")]
     public AllScoreBehaviour score;
 
-    private Main main_game_script;
+    
     private Camera MainCamera;
 
     private void Awake()
@@ -90,24 +88,29 @@ public class Building : MonoBehaviour
             }
         }
     }
-    public void BuildIncome(GameObject main_script_object)
+    public void PermIncome(int level)
     {
-        main_game_script.money += static_money;
+        Vector3 income = permanentIncome[level];
+
+        score.resourseMoney += income.x;
+        score.resoursePeople += (int)income.y;
+        score.resourseElectricity += income.z;
+        /*main_game_script.money += static_money;
         main_game_script.Electrisity_count += static_electro;
-        main_game_script.People_count += static_people;
+        main_game_script.People_count += static_people;*/
     }
 
     public IEnumerator TimeIncome()
     {
-        
+        yield return new WaitForSeconds(60);
         while (true)
         {
-            float timed_money = timedIncome[currentLevel].x;
+            score.resourseMoney += timedIncome[currentLevel].x;
             //float timed_electro = timedIncome[currentLevel].x;
-            int timed_people = (int)timedIncome[currentLevel].y;
-            main_game_script.money += timed_money;
+            score.resoursePeople += (int)timedIncome[currentLevel].y;
+            StartCoroutine(routine: inter.ShowMessage("Фабрика сработала"));
             //main_game_script.Electrisity_count += timed_electro;
-            score.resoursePeople += timed_people;
+            
 
             yield return new WaitForSeconds(60);
         }
@@ -115,14 +118,25 @@ public class Building : MonoBehaviour
 
     private void SetLevel(int level)
     {
-
+        for (int i = 0; i < levelsCount; ++i)
+            levelVisuals[i].SetActive(false);
+        levelVisuals[level].SetActive(true);
+        StopAllCoroutines();
+        StartCoroutine(routine: TimeIncome());
     }
 
-    public void BuyLevel()
+    public void BuyLevel(int level)
     {
+        Vector3 price = prices[level];
+
+        score.resourseMoney -= price.x;
+        score.resoursePeople -= (int)price.y;
+        score.resourseElectricity -= price.z;
+        PermIncome(level);
         /*main_game_script.People_count -= price_people;
         main_game_script.Electrisity_count -= price_electro;
         main_game_script.money -= price_money;*/
+        SetLevel(level);
     }
  
 

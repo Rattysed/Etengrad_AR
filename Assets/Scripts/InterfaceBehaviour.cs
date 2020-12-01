@@ -22,6 +22,13 @@ public class InterfaceBehaviour : MonoBehaviour
     public Text message;
 
 
+    public IEnumerator ShowMessage(string text)
+    {
+        message.text = text;
+        yield return new WaitForSeconds(2);
+        message.text = "";
+    }
+
     public void MessageString(string text)
     {
         message.text += '\n' + text;

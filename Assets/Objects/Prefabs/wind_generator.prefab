@@ -148,12 +148,11 @@ MonoBehaviour:
   inter: {fileID: 0}
   levelsCount: 1
   prices:
-  - {x: 0, y: 0, z: 0}
+  - {x: 5, y: 2, z: 0}
   levelVisuals:
-  - {fileID: 0}
-  static_money: 0
-  static_people: 0
-  static_electro: 2
+  - {fileID: 1441188915267902858}
+  permanentIncome:
+  - {x: 0, y: 0, z: 2}
   timedIncome:
   - {x: 0, y: 0, z: 0}
   score: {fileID: 0}
@@ -226,6 +225,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 00d830e1b09ee8e44adfe19f354680dc, type: 3}
+--- !u!1 &1441188915267902858 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: 00d830e1b09ee8e44adfe19f354680dc,
+    type: 3}
+  m_PrefabInstance: {fileID: 7431445953649394819}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2475704869098418073 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 00d830e1b09ee8e44adfe19f354680dc,

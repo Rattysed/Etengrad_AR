@@ -21,6 +21,7 @@ public class BuildingsGrid : MonoBehaviour
 
     private bool available = true;
     private Vector2Int place;
+    private Vector3 price;
 
     private void Awake()
     {
@@ -29,6 +30,20 @@ public class BuildingsGrid : MonoBehaviour
         help_object.transform.SetParent(real_grid_object.transform);
         mainCamera = Camera.main;
        // mainScript = mainScriptObject.GetComponent<Main>();
+    }
+
+    public void StartBuyingBuilding(Building buildingPrefab)
+    {
+        price = buildingPrefab.prices[0];
+        /*if (price.x > allScore.resourseMoney ||
+            price.y > allScore.resoursePeople ||
+            price.z > allScore.resourseElectricity)
+        {
+            StartCoroutine(routine: inter.ShowMessage("Недостаточно ресурсов."));
+            return;
+        }*/
+        StartPlacingBuilding(buildingPrefab);
+
     }
 
     public void StartPlacingBuilding(Building buildingPrefab)
@@ -80,6 +95,9 @@ public class BuildingsGrid : MonoBehaviour
                 available = true;
                 if (x < 0 || x > GridSize.x - flyingBuilding.Size.x) available = false;
                 if (y < 0 || y > GridSize.y - flyingBuilding.Size.y) available = false;
+                if (price.x > allScore.resourseMoney ||
+                    price.y > allScore.resoursePeople ||
+                    price.z > allScore.resourseElectricity) available = false;
 
                 if (available && IsPlaceTaken(x, y)) available = false;
 
@@ -102,6 +120,14 @@ public class BuildingsGrid : MonoBehaviour
             Destroy(flyingBuilding.gameObject);
         flyingBuilding = null;
         inter.QuitBuildMenu();
+    }
+    public void AcceptBuying()
+    {
+        if (available)
+        {
+            flyingBuilding.BuyLevel(0);
+            AcceptPlacing();
+        }
     }
     public void AcceptPlacing()
     {
@@ -126,12 +152,12 @@ public class BuildingsGrid : MonoBehaviour
             {
                 if (grid[placeX + x, placeY + y] != null)
                 {
-                    Debug.Log("place_fucked");
+                    //Debug.Log("place_fucked");
                     return true;
                 }
             }
         }
-        Debug.Log("place_free");
+        //Debug.Log("place_free");
         return false;
     }
 

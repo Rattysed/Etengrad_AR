@@ -36,18 +36,18 @@ public class WorldBehaviour : MonoBehaviour {
 
     private IEnumerator Controller(){
         while (true){
-            /*if (Input.GetMouseButtonDown(0))
-                yield return StartCoroutine(routine: OneFingerMode());*/               //Это для теста на компе
+            if (Input.GetMouseButtonDown(0))
+                yield return StartCoroutine(routine: OneFingerMode());//*/               //Это для теста на компе
             switch (Input.touchCount){
                 case 0:
-                    message.text = "0 taps";
+                    //message.text = "0 taps";
                     break;
                 case 1:
-                    message.text = "1 tap";
+                    //message.text = "1 tap";
                     yield return StartCoroutine(routine: OneFingerMode());
                     break;
                 case 2:
-                    message.text = "2 taps";
+                    //message.text = "2 taps";
                     yield return StartCoroutine(routine: TwoFingersMode());
                     break;
             }
@@ -56,6 +56,7 @@ public class WorldBehaviour : MonoBehaviour {
     }
     public IEnumerator OneFingerMode()
     {
+        float time = 0;
         Debug.Log("YES");
         //int width = res.width;
         //int height = res.height;
@@ -65,9 +66,10 @@ public class WorldBehaviour : MonoBehaviour {
         //Vector2 oldPos = Input.mousePosition;
         Vector3 oldPos = Vector3.zero;
         yield return null;
-        while (Input.touchCount == 1 && !IsMouseOverUI())
-        //while (!Input.GetMouseButtonUp(0) && !IsMouseOverUI()) // Это тоже, необходимо будет закомментить строку выше
+        //while (Input.touchCount == 1 && !IsMouseOverUI())
+        while (!Input.GetMouseButtonUp(0) && !IsMouseOverUI()) // Это тоже, необходимо будет закомментить строку выше
         {
+            time += Time.deltaTime;
             RaycastHit hit;
             
             int layerMaskBuildings = (1 << 8) | 5;
