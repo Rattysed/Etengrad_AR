@@ -7,9 +7,9 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 public class AllScoreBehaviour : MonoBehaviour
 {
-    float resourseMoney;
-    float resourseElectricity;
-    int resoursePeople;
+    public float resourseMoney;
+    public float resourseElectricity;
+    public int resoursePeople;
     [Header("Labels")]
     public Text labelResourseMoney;
     public Text labelResourseElectricity;
@@ -33,8 +33,8 @@ public class AllScoreBehaviour : MonoBehaviour
     }
     void resourseLabelUpdate() // Обновление табличек с числом ресурсов
     { 
-        labelResourseElectricity.text = Mathf.Floor(resourseElectricity).ToString();
-        labelResourseMoney.text = Mathf.Floor(resourseMoney).ToString();
+        labelResourseElectricity.text = resourseElectricity.ToString();
+        labelResourseMoney.text = resourseMoney.ToString();
         labelResoursePeople.text = resoursePeople.ToString();
 
     }

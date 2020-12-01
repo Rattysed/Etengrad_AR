@@ -12,6 +12,8 @@ public class Building : MonoBehaviour
 
     int currentLevel = 0;
 
+    public InterfaceBehaviour inter;
+
     public int levelsCount;
     //public Canvas canvas;
 
@@ -34,10 +36,14 @@ public class Building : MonoBehaviour
     public float static_electro = 0;
     
     [Header("Timed income (UnitsPerMinute)")]
-    public float timed_money = 0;
+    public List<Vector3> timedIncome = new List<Vector3>();
+    /*public float timed_money = 0;
     public int timed_people = 0;
-    public float timed_electro = 0;
-    
+    public float timed_electro = 0;*/
+
+
+    [Header("Score")]
+    public AllScoreBehaviour score;
 
     private Main main_game_script;
     private Camera MainCamera;
@@ -66,10 +72,10 @@ public class Building : MonoBehaviour
         MainRenderer.material.color = new Color(240, 54, 54, 0f);
     }
 
-    public void UnsetNormal()
+    /*public void UnsetNormal()
     {
         MainRenderer.GetComponent<BoxCollider>().enabled = false;
-    }
+    }*/
 
     private void OnDrawGizmos()
     {
@@ -96,12 +102,20 @@ public class Building : MonoBehaviour
         
         while (true)
         {
+            float timed_money = timedIncome[currentLevel].x;
+            //float timed_electro = timedIncome[currentLevel].x;
+            int timed_people = (int)timedIncome[currentLevel].y;
             main_game_script.money += timed_money;
-            main_game_script.Electrisity_count += timed_electro;
-            main_game_script.People_count += timed_people;
+            //main_game_script.Electrisity_count += timed_electro;
+            score.resoursePeople += timed_people;
 
             yield return new WaitForSeconds(60);
         }
+    }
+
+    private void SetLevel(int level)
+    {
+
     }
 
     public void BuyLevel()
