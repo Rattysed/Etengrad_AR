@@ -138,8 +138,11 @@ public class Building : MonoBehaviour
         main_game_script.money -= price_money;*/
         SetLevel(level);
     }
- 
 
+    private void OnApplicationQuit()
+    {
+        StopAllCoroutines();
+    }
     private void Update()
     {
        

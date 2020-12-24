@@ -36,7 +36,7 @@ public class WorldBehaviour : MonoBehaviour {
 
     private IEnumerator Controller(){
         while (true){
-            if (Input.GetMouseButtonDown(0))
+            /*if (Input.GetMouseButtonDown(0))
                 yield return StartCoroutine(routine: OneFingerMode());//*/               //Это для теста на компе
             switch (Input.touchCount){
                 case 0:
@@ -66,8 +66,8 @@ public class WorldBehaviour : MonoBehaviour {
         //Vector2 oldPos = Input.mousePosition;
         Vector3 oldPos = Vector3.zero;
         yield return null;
-        //while (Input.touchCount == 1 && !IsMouseOverUI())
-        while (!Input.GetMouseButtonUp(0) && !IsMouseOverUI()) // Это тоже, необходимо будет закомментить строку выше
+        while (Input.touchCount == 1 && !IsMouseOverUI())
+        //while (!Input.GetMouseButtonUp(0) && !IsMouseOverUI()) // Это тоже, необходимо будет закомментить строку выше
         {
             time += Time.deltaTime;
             RaycastHit hit;
