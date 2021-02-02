@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 9cf52bcf434039745af8b4020d141848
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Terminal Grotesque
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 445c5d0ef3f2d724cb16129c35513d91, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

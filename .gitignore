@@ -1,3 +1,4 @@
+
 # This .gitignore file should be placed at the root of your Unity project directory
 #
 # Get latest from https://github.com/github/gitignore/blob/master/Unity.gitignore
@@ -52,14 +53,7 @@ ExportedObj/
 # Unity3D generated meta files
 *.pidb.meta
 *.pdb.meta
-*.pdn.meta
 *.mdb.meta
-*.cs.meta
-*.blend.meta
-*.blend1.meta
-*.txt.meta
-*.png.meta
-*.fbx.meta
 
 
 
@@ -80,6 +74,3 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
-
-# Smthing
-/[Pp]rojectSettings/[Pp]rojectVersion.txt
